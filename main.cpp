@@ -7,36 +7,39 @@
 //массив всех тестов, который мы заполняем в функции initTests
 static std::vector<std::function<bool()>> tests;
 
-//тест 1
-bool test1()
+//Тест 1. Тело зелёной свечи включает значение?
+bool test_body_contains1()
 {
-  //пример какого-то теста
-  return 42 == (41 + 1); //passed
+  // Формируем тестовую зелёную свечу (СМЗ, таймфрейм 1D, 15-02-2022, признаки Pump&Dump)
+  Candle candle{ 9450.00, 13220.00, 9300.00, 13220.00 }; // OHLC
+  
+  return candle.body_contains(9450.00); //passed
 }
 
-//тест 2
-bool test2()
+//Тест 2. Тело красной свечи включает значение?
+bool test_body_contains2()
 {
-  //пример какого-то теста
-  return 42 != (41 + 1); //failed
+  // Формируем тестовую красную свечу (Транснефть, таймфрейм 1W, 18-11-2024, новость об увеличении налога на эмитента)
+  Candle candle{ 1277.00, 1278.50, 1024.00, 1072.00 }; // OHLC
+  
+  return candle.body_contains(1072.00); //passed
 }
 
-//тест 3
-bool test3()
+//тест 3. Тело доджа включает значение (проверка свечи с одинаковыми значениями открытия и закрытия)?
+bool test_body_contains3()
 {
-  Candle candle{ 0.0, 3.0, 3.0, 3.0 };
-
-  //пример какого-то теста
-  return candle.high == 3.0;
+  // Формируем тестовую свечу додж (АЛРОСА, таймфрейм 1D, 17-11-2024)
+  Candle candle{ 66.66, 66.99, 66.66, 65.67 }; // OHLC
+  
+  return candle.body_contains(66.66); //passed
 }
 
 void initTests()
 {
-  tests.push_back(test1);
-  tests.push_back(test2);
-  tests.push_back(test3);
-  //tests.push_back(test4);
-  //tests.push_back(test5);
+  // Тесты вхождения значения цены в тело свечи
+  tests.push_back(test_body_contains1);
+  tests.push_back(test_body_contains2);
+  tests.push_back(test_body_contains3);
 }
 
 int launchTests()
