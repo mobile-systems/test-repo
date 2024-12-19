@@ -146,6 +146,33 @@ bool test_is_red3()
   return candle.is_red(); //passed
 }
 
+// 2.6. написать 3 теста для метода 'is_green'
+// Тест 16. Зелёная свеча?
+bool test_is_green1()
+{
+  // Формируем тестовую зелёную свечу (СМЗ, таймфрейм 1D, 15-02-2022, признаки Pump&Dump)
+  Candle candle{ 9450.00, 13220.00, 9300.00, 13220.00 }; // OHLC
+  
+  return candle.is_green(); // является?
+}
+
+// Тест 17. Красная свечи?
+bool test_is_green2()
+{
+  // Формируем тестовую красную свечу (Транснефть, таймфрейм 1W, 18-11-2024, новость об увеличении налога на эмитента)
+  Candle candle{ 1277.00, 1278.50, 1024.00, 1072.00 }; // OHLC
+  
+  return candle.is_green() == false; // не является
+}
+
+// Тест 18. Додж является зелёным?
+bool test_is_green3()
+{
+  // Формируем тестовую свечу додж (АЛРОСА, таймфрейм 1D, 17-11-2024)
+  Candle candle{ 66.66, 66.99, 66.66, 65.67 }; // OHLC
+  
+  return candle.is_green() == false; //passed
+}
 void initTests()
 {
   // 2.1. тесты для метода 'body_contains' (на вхождение значения цены в тело свечи)
@@ -168,6 +195,10 @@ void initTests()
   tests.push_back(test_is_red1);
   tests.push_back(test_is_red2);
   tests.push_back(test_is_red3);
+  // 2.6 тесты для метода 'is_green' (свеча зелёная?)
+  tests.push_back(test_is_green1);
+  tests.push_back(test_is_green2);
+  tests.push_back(test_is_green3);
 }
 
 int launchTests()
