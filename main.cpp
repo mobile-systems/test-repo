@@ -90,6 +90,34 @@ bool test_full_size3()
   return candle.full_size() >= Price(0) && candle.full_size() < Price(1); //passed
 }
 
+// 2.4. написать 3 теста для метода 'body_size'
+// Тест 10. Размер зелёной свечи в диапазоне?
+bool test_body_size1()
+{
+  // Формируем тестовую зелёную свечу (СМЗ, таймфрейм 1D, 15-02-2022, признаки Pump&Dump)
+  Candle candle{ 9450.00, 13220.00, 9300.00, 13220.00 }; // OHLC
+  
+  return candle.body_size() >= Price(0) && candle.body_size() < Price(4000); //passed
+}
+
+// Тест 11. Размер красной свечи в диапазоне?
+bool test_body_size2()
+{
+  // Формируем тестовую красную свечу (Транснефть, таймфрейм 1W, 18-11-2024, новость об увеличении налога на эмитента)
+  Candle candle{ 1277.00, 1278.50, 1024.00, 1072.00 }; // OHLC
+  
+  return candle.body_size() >= Price(0) && candle.body_size() < Price(300); //passed
+}
+
+// Тест 12. Додж в диапазоне (проверка свечи с одинаковыми значениями открытия и закрытия)?
+bool test_body_size3()
+{
+  // Формируем тестовую свечу додж (АЛРОСА, таймфрейм 1D, 17-11-2024)
+  Candle candle{ 66.66, 66.99, 66.66, 65.67 }; // OHLC
+  
+  return candle.body_size() >= Price(0) && candle.body_size() < Price(1); //passed
+}
+
 void initTests()
 {
   // 2.1. тесты для метода 'body_contains' (на вхождение значения цены в тело свечи)
@@ -104,6 +132,10 @@ void initTests()
   tests.push_back(test_full_size1);
   tests.push_back(test_full_size2);
   tests.push_back(test_full_size3);
+  // 2.4 тесты для метода 'body_size' (на размер тела свечи в диапазоне)
+  tests.push_back(test_body_size1);
+  tests.push_back(test_body_size2);
+  tests.push_back(test_body_size3);
 }
 
 int launchTests()
